@@ -7,6 +7,7 @@ import { TrendCharts } from '@/components/TrendCharts';
 import { ProviderRankings } from '@/components/ProviderRankings';
 import { DashboardSummary } from '@/components/DashboardSummary';
 import { SearchAndFilter } from '@/components/SearchAndFilter';
+import { ProviderVisitPieChart } from '@/components/ProviderVisitPieChart';
 import type { MonthReport } from '@/lib/types';
 
 export default function DashboardPage() {
@@ -112,6 +113,8 @@ export default function DashboardPage() {
       )}
 
       {reports.length > 0 && <TrendCharts reports={reports} />}
+
+      {reports.length > 0 && <ProviderVisitPieChart reports={reports} />}
     </main>
   );
 }
