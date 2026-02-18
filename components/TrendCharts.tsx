@@ -110,6 +110,7 @@ export function TrendCharts({ reports }: TrendChartsProps) {
                 tick={{ fontSize: 11, fill: 'var(--muted)' }} 
                 stroke="var(--muted)"
                 style={{ fontSize: '11px' }}
+                domain={[0, (dataMax: number) => Math.max(dataMax * 1.2, 5000)]}
               />
               <Tooltip content={<CustomTooltip />} />
               {(() => {
