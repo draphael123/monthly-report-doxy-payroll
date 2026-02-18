@@ -62,7 +62,14 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
   ];
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 32 }}>
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: 16,
+        marginBottom: 32,
+      }}
+    >
       {stats.map((stat) => {
         return (
           <div
