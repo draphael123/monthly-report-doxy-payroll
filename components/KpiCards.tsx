@@ -60,47 +60,49 @@ export function KpiCards({ report }: KpiCardsProps) {
         gap: 16,
       }}
     >
-      {cards.map((c) => (
-        <div
-          key={c.label}
-          className="card-pad"
-          style={{ 
-            borderLeft: `4px solid ${c.color}`,
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-          }}
-        >
+      {cards.map((c) => {
+        return (
           <div
-            style={{
-              fontSize: 12,
-              textTransform: 'uppercase',
-              letterSpacing: 0.5px,
-              color: 'var(--muted)',
-              marginBottom: 12,
-              fontWeight: 600,
-              fontFamily: 'var(--font-mono)',
+            key={c.label}
+            className="card-pad"
+            style={{ 
+              borderLeft: `4px solid ${c.color}`,
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
             }}
           >
-            {c.label}
+            <div
+              style={{
+                fontSize: 12,
+                textTransform: 'uppercase',
+                letterSpacing: 0.5px,
+                color: 'var(--muted)',
+                marginBottom: 12,
+                fontWeight: 600,
+                fontFamily: 'var(--font-mono)',
+              }}
+            >
+              {c.label}
+            </div>
+            <div style={{ fontSize: 32, fontWeight: 700, color: c.color, marginBottom: 12, lineHeight: 1.2 }}>
+              {c.value}
+            </div>
+            <GoalAttainmentBar
+              actual={c.actual}
+              goal={c.goal}
+              label={c.label}
+              higherIsBetter={c.higherIsBetter}
+            />
           </div>
-          <div style={{ fontSize: 32, fontWeight: 700, color: c.color, marginBottom: 12, lineHeight: 1.2 }}>
-            {c.value}
-          </div>
-          <GoalAttainmentBar
-            actual={c.actual}
-            goal={c.goal}
-            label={c.label}
-            higherIsBetter={c.higherIsBetter}
-          />
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

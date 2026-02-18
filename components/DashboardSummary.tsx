@@ -19,7 +19,7 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
   const avgBooked = reports.reduce((sum, r) => sum + parseFloat(monthSummary(r).booked), 0) / reports.length;
   const totalMonths = reports.length;
 
-  const calculateChange = (current: number, prev: number | null): number | null => {
+  const calculateChange = (current: number, prev: number | null) => {
     if (!prev) return null;
     const change = ((current - prev) / prev) * 100;
     return Math.round(change);
@@ -63,60 +63,62 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 32 }}>
-      {stats.map((stat) => (
-        <div
-          key={stat.label}
-          className="card-pad"
-          style={{
-            borderLeft: `4px solid ${stat.color}`,
-            transition: 'all 0.2s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
-          }}
-        >
+      {stats.map((stat) => {
+        return (
           <div
+            key={stat.label}
+            className="card-pad"
             style={{
-              fontSize: 11,
-              textTransform: 'uppercase',
-              letterSpacing: 0.5px,
-              color: 'var(--muted)',
-              marginBottom: 8,
-              fontWeight: 600,
-              fontFamily: 'var(--font-mono)',
+              borderLeft: `4px solid ${stat.color}`,
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
             }}
           >
-            {stat.label}
-          </div>
-          <div style={{ fontSize: 24, fontWeight: 700, color: stat.color, marginBottom: 4 }}>
-            {stat.value}
-          </div>
-          {stat.change !== null && (
             <div
               style={{
-                fontSize: 12,
-                color: stat.change >= 0 ? 'var(--green)' : 'var(--red)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 4,
+                fontSize: 11,
+                textTransform: 'uppercase',
+                letterSpacing: 0.5px,
+                color: 'var(--muted)',
+                marginBottom: 8,
+                fontWeight: 600,
+                fontFamily: 'var(--font-mono)',
               }}
             >
-              <span>{stat.change >= 0 ? '↑' : '↓'}</span>
-              <span>{Math.abs(stat.change)}%</span>
-              {stat.changeLabel && (
-                <span style={{ color: 'var(--muted)', fontSize: 11, marginLeft: 4 }}>
-                  {stat.changeLabel}
-                </span>
-              )}
+              {stat.label}
             </div>
-          )}
-        </div>
-      ))}
+            <div style={{ fontSize: 24, fontWeight: 700, color: stat.color, marginBottom: 4 }}>
+              {stat.value}
+            </div>
+            {stat.change !== null && (
+              <div
+                style={{
+                  fontSize: 12,
+                  color: stat.change >= 0 ? 'var(--green)' : 'var(--red)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
+                }}
+              >
+                <span>{stat.change >= 0 ? '↑' : '↓'}</span>
+                <span>{Math.abs(stat.change)}%</span>
+                {stat.changeLabel && (
+                  <span style={{ color: 'var(--muted)', fontSize: 11, marginLeft: 4 }}>
+                    {stat.changeLabel}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
