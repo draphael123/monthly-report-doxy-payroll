@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import type { MonthReport } from '@/lib/types';
 import { monthSummary } from '@/lib/utils';
 
@@ -8,7 +7,7 @@ interface DashboardSummaryProps {
   reports: MonthReport[];
 }
 
-export function DashboardSummary({ reports }: DashboardSummaryProps): JSX.Element | null {
+export function DashboardSummary({ reports }: DashboardSummaryProps) {
   if (reports.length === 0) return null;
 
   const latest = reports[reports.length - 1];

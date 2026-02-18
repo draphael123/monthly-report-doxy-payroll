@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
 import type { MonthReport } from '@/lib/types';
 import { monthSummary } from '@/lib/utils';
@@ -11,7 +10,7 @@ interface MonthCardProps {
   previousReport?: MonthReport | null;
 }
 
-export function MonthCard({ report, previousReport }: MonthCardProps): JSX.Element {
+export function MonthCard({ report, previousReport }: MonthCardProps) {
   const summary = monthSummary(report);
   const prevSummary = previousReport ? monthSummary(previousReport) : null;
 

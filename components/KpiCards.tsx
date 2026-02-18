@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import type { MonthReport } from '@/lib/types';
 import { monthSummary } from '@/lib/utils';
 import { GoalAttainmentBar } from './GoalAttainmentBar';
@@ -11,7 +10,7 @@ interface KpiCardsProps {
 
 const cardAccents = ['var(--accent)', 'var(--green)', 'var(--red)', 'var(--yellow)'] as const;
 
-export function KpiCards({ report }: KpiCardsProps): JSX.Element {
+export function KpiCards({ report }: KpiCardsProps) {
   const summary = monthSummary(report);
   const appts = Number(summary.appts);
   const booked = parseFloat(summary.booked);
