@@ -1,8 +1,9 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import type { MonthReport } from '@/lib/types';
-import { monthSummary, calculateChange } from '@/lib/utils';
+import { monthSummary } from '@/lib/utils';
 import { ChangeIndicator } from './ChangeIndicator';
 
 interface MonthCardProps {

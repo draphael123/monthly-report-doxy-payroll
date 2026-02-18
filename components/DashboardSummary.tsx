@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import type { MonthReport } from '@/lib/types';
 import { monthSummary } from '@/lib/utils';
 
