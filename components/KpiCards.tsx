@@ -64,20 +64,32 @@ export function KpiCards({ report }: KpiCardsProps) {
         <div
           key={c.label}
           className="card-pad"
-          style={{ borderTop: `2px solid ${c.color}` }}
+          style={{ 
+            borderTop: `3px solid ${c.color}`,
+            transition: 'all 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+          }}
         >
           <div
             style={{
-              fontSize: 10,
+              fontSize: 11,
               textTransform: 'uppercase',
-              letterSpacing: 1.5,
+              letterSpacing: 1.2,
               color: 'var(--muted)',
-              marginBottom: 6,
+              marginBottom: 8,
+              fontWeight: 500,
             }}
           >
             {c.label}
           </div>
-          <div style={{ fontSize: 20, fontWeight: 600, color: c.color }}>
+          <div style={{ fontSize: 24, fontWeight: 700, color: c.color, marginBottom: 8 }}>
             {c.value}
           </div>
           <GoalAttainmentBar

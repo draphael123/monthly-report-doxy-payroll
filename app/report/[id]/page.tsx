@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { KpiCards } from '@/components/KpiCards';
 import { WeeklyTable } from '@/components/WeeklyTable';
 import { ProviderTable } from '@/components/ProviderTable';
+import { ProviderRankings } from '@/components/ProviderRankings';
 import { LeadsTable } from '@/components/LeadsTable';
 import { NotesSection } from '@/components/NotesSection';
 import type { MonthReport } from '@/lib/types';
@@ -86,16 +87,23 @@ export default function ReportDetailPage() {
           <Link href="/" className="btn btn-sm" style={{ marginBottom: 8, display: 'inline-block' }}>
             ← Back
           </Link>
-          <h1 className="font-display font-semibold" style={{ fontSize: 22, color: 'var(--text)' }}>
+          <h1 className="font-display font-semibold" style={{ fontSize: 28, color: 'var(--text)', letterSpacing: '-0.5px' }}>
             {report.label}
           </h1>
-          <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 4 }}>
+          <p style={{ fontSize: 13, color: 'var(--muted)', marginTop: 6 }}>
             Created {report.createdAt}
           </p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <a
+            href={`/api/reports/export/${id}/csv`}
+            className="btn"
+            download
+          >
+            📊 Export CSV
+          </a>
           <button type="button" className="btn" onClick={handleExportPdf}>
-            ↓ Export PDF
+            📄 Export PDF
           </button>
           <button
             type="button"
@@ -124,9 +132,17 @@ export default function ReportDetailPage() {
         recommendations={report.recommendations}
       />
 
-      <div className="section-label">Provider Schedule Utilization — % of Schedule Booked</div>
-      <div className="card" style={{ overflowX: 'auto' }}>
-        <ProviderTable providers={report.providers} weeks={report.weeks} />
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+        <div>
+          <div className="section-label">Top Performers</div>
+          <ProviderRankings report={report} />
+        </div>
+        <div>
+          <div className="section-label">Provider Schedule Utilization — % of Schedule Booked</div>
+          <div className="card" style={{ overflowX: 'auto' }}>
+            <ProviderTable providers={report.providers} weeks={report.weeks} />
+          </div>
+        </div>
       </div>
 
       {report.leads.length > 0 && (

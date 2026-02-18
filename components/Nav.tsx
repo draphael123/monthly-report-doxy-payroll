@@ -7,12 +7,17 @@ export function Nav() {
     <nav className="nav">
       <Link
         href="/"
-        className="font-display font-semibold text-[17px] tracking-tight"
-        style={{ color: 'var(--text)' }}
+        className="font-display font-semibold"
+        style={{ 
+          fontSize: 20, 
+          letterSpacing: '-0.5px',
+          color: 'var(--text)',
+          textDecoration: 'none',
+        }}
       >
         Fountain <span style={{ color: 'var(--accent)' }}>Vitality</span>
       </Link>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <Link href="/" className="btn btn-sm">
           Dashboard
         </Link>

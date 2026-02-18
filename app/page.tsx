@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { MonthCard } from '@/components/MonthCard';
 import { KpiCards } from '@/components/KpiCards';
 import { TrendCharts } from '@/components/TrendCharts';
+import { ProviderRankings } from '@/components/ProviderRankings';
 import type { MonthReport } from '@/lib/types';
 
 export default function DashboardPage() {
@@ -46,17 +47,33 @@ export default function DashboardPage() {
 
   return (
     <main className="page">
-      <h1 className="font-display font-semibold" style={{ fontSize: 24, marginBottom: 8, color: 'var(--text)' }}>
-        Clinical Operations Dashboard
-      </h1>
-      <p style={{ color: 'var(--muted)', fontSize: 13, marginBottom: 32 }}>
-        Monthly reporting — appointments, booked rate, and trends
-      </p>
+      <div style={{ marginBottom: 40 }}>
+        <h1 className="font-display font-semibold" style={{ fontSize: 32, marginBottom: 8, color: 'var(--text)', letterSpacing: '-0.5px' }}>
+          Clinical Operations Dashboard
+        </h1>
+        <p style={{ color: 'var(--muted)', fontSize: 15, lineHeight: 1.6 }}>
+          Monthly reporting — appointments, booked rate, and trends
+        </p>
+      </div>
 
       {latestReport && (
         <>
           <div className="section-label">Latest month — {latestReport.label}</div>
           <KpiCards report={latestReport} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }}>
+            <ProviderRankings report={latestReport} />
+            <div className="card-pad" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 12 }}>
+              <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 8 }}>Export Data</div>
+              <a
+                href={`/api/reports/export/${latestReport.id}/csv`}
+                className="btn btn-primary"
+                download
+                style={{ textDecoration: 'none' }}
+              >
+                📊 Export to CSV
+              </a>
+            </div>
+          </div>
         </>
       )}
 
@@ -64,12 +81,16 @@ export default function DashboardPage() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-          gap: 16,
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: 20,
         }}
       >
-        {reports.map((r) => (
-          <MonthCard key={r.id} report={r} />
+        {reports.map((r, index) => (
+          <MonthCard 
+            key={r.id} 
+            report={r} 
+            previousReport={index > 0 ? reports[index - 1] : null}
+          />
         ))}
       </div>
 
