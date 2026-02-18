@@ -11,7 +11,7 @@ interface KpiCardsProps {
 
 const cardAccents = ['var(--accent)', 'var(--green)', 'var(--red)', 'var(--yellow)'] as const;
 
-export function KpiCards({ report }: KpiCardsProps) {
+export function KpiCards({ report }: KpiCardsProps): JSX.Element {
   const summary = monthSummary(report);
   const appts = Number(summary.appts);
   const booked = parseFloat(summary.booked);

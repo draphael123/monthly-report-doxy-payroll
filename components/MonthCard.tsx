@@ -11,7 +11,7 @@ interface MonthCardProps {
   previousReport?: MonthReport | null;
 }
 
-export function MonthCard({ report, previousReport }: MonthCardProps) {
+export function MonthCard({ report, previousReport }: MonthCardProps): JSX.Element {
   const summary = monthSummary(report);
   const prevSummary = previousReport ? monthSummary(previousReport) : null;
 

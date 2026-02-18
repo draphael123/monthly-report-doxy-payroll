@@ -8,7 +8,7 @@ interface DashboardSummaryProps {
   reports: MonthReport[];
 }
 
-export function DashboardSummary({ reports }: DashboardSummaryProps) {
+export function DashboardSummary({ reports }: DashboardSummaryProps): JSX.Element | null {
   if (reports.length === 0) return null;
 
   const latest = reports[reports.length - 1];
@@ -20,7 +20,7 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
   const avgBooked = reports.reduce((sum, r) => sum + parseFloat(monthSummary(r).booked), 0) / reports.length;
   const totalMonths = reports.length;
 
-  const calculateChange = (current: number, prev: number | null) => {
+  const calculateChange = (current: number, prev: number | null): number | null => {
     if (!prev) return null;
     const change = ((current - prev) / prev) * 100;
     return Math.round(change);
@@ -101,14 +101,14 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
             <div
               style={{
                 fontSize: 12,
-                color: stat.change! >= 0 ? 'var(--green)' : 'var(--red)',
+                color: stat.change >= 0 ? 'var(--green)' : 'var(--red)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 4,
               }}
             >
-              <span>{stat.change! >= 0 ? '↑' : '↓'}</span>
-              <span>{Math.abs(stat.change!)}%</span>
+              <span>{stat.change >= 0 ? '↑' : '↓'}</span>
+              <span>{Math.abs(stat.change)}%</span>
               {stat.changeLabel && (
                 <span style={{ color: 'var(--muted)', fontSize: 11, marginLeft: 4 }}>
                   {stat.changeLabel}
@@ -121,4 +121,3 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
     </div>
   );
 }
-
