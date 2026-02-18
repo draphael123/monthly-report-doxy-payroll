@@ -70,7 +70,7 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
           </div>
           <div>
             <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
-              VV &gt;20 Min
+              VV {'>'}20 Min
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{ color: 'var(--text)', fontWeight: 700, fontSize: 20 }}>

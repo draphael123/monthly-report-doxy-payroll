@@ -35,7 +35,7 @@ export function KpiCards({ report }: KpiCardsProps) {
       color: cardAccents[1],
     },
     {
-      label: 'Avg VV &gt;20 Min',
+      label: 'Avg VV >20 Min',
       value: `${summary.vvs}%`,
       goal: null,
       actual: vvs,

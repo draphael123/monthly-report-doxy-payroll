@@ -195,7 +195,7 @@ export function TrendCharts({ reports }: TrendChartsProps) {
         {/* VV >20% Chart */}
         <div style={{ height: 280 }}>
           <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 12 }}>
-            Avg VV &gt;20 Min %
+            Avg VV {'>'}20 Min %
           </div>
           <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
