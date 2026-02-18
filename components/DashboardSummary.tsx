@@ -32,12 +32,17 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
     ? calculateChange(parseFloat(latestSummary.booked), parseFloat(previousSummary.booked))
     : null;
 
+  const monthLabels = reports.length <= 6 
+    ? reports.map(r => r.label).join(', ')
+    : `${reports[0].label} - ${reports[reports.length - 1].label} (${reports.length} months)`;
+
   const stats = [
     {
       label: 'Total Months Tracked',
       value: totalMonths.toString(),
       change: null,
       color: 'var(--accent)',
+      subtitle: monthLabels,
     },
     {
       label: 'Total Appointments',
@@ -104,6 +109,19 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
             <div style={{ fontSize: 24, fontWeight: 700, color: stat.color, marginBottom: 4 }}>
               {stat.value}
             </div>
+            {stat.subtitle && (
+              <div
+                style={{
+                  fontSize: 11,
+                  color: 'var(--muted)',
+                  marginTop: 4,
+                  lineHeight: 1.4,
+                  fontFamily: 'var(--font-mono)',
+                }}
+              >
+                {stat.subtitle}
+              </div>
+            )}
             {stat.change !== null && (
               <div
                 style={{
