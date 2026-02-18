@@ -6,12 +6,13 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const report = getReport(params.id);
+    const report = await getReport(params.id);
     if (!report) {
       return NextResponse.json({ error: 'Report not found' }, { status: 404 });
     }
     return NextResponse.json(report);
   } catch (error) {
+    console.error('Error loading report:', error);
     return NextResponse.json({ error: 'Failed to load report' }, { status: 500 });
   }
 }
@@ -21,9 +22,10 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    deleteReport(params.id);
+    await deleteReport(params.id);
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error('Error deleting report:', error);
     return NextResponse.json({ error: 'Failed to delete report' }, { status: 500 });
   }
 }

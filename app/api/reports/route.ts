@@ -4,7 +4,7 @@ import { MonthReport } from '@/lib/types';
 
 export async function GET() {
   try {
-    const reports = getAllReports();
+    const reports = await getAllReports();
     return NextResponse.json(reports);
   } catch (error) {
     console.error('Error loading reports:', error);
@@ -19,9 +19,10 @@ export async function POST(request: NextRequest) {
     if (!report.id || !report.label) {
       return NextResponse.json({ error: 'Missing required fields: id, label' }, { status: 400 });
     }
-    saveReport(report);
+    await saveReport(report);
     return NextResponse.json(report, { status: 201 });
   } catch (error) {
+    console.error('Error saving report:', error);
     return NextResponse.json({ error: 'Failed to save report' }, { status: 500 });
   }
 }

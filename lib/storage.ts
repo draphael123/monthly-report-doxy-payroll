@@ -3,6 +3,13 @@ import path from 'path';
 import { MonthReport, ReportsStore } from './types';
 
 const DATA_PATH = path.join(process.cwd(), 'data', 'reports.json');
+const GITHUB_OWNER = 'draphael123';
+const GITHUB_REPO = 'monthly-report-doxy-payroll';
+const GITHUB_FILE_PATH = 'data/reports.json';
+
+// Check if we're in production (Vercel)
+const isProduction = process.env.VERCEL === '1' || process.env.NODE_ENV === 'production';
+const useGitHubAPI = isProduction && !!process.env.GITHUB_TOKEN;
 
 // ─── January 2026 Seed Data ──────────────────────────────────────────────────
 const JAN_2026_SEED: MonthReport = {
@@ -64,7 +71,92 @@ const JAN_2026_SEED: MonthReport = {
   recommendations: 'All VVs are now 20 minutes\nHRT Follow-up 20-min VV launched 1/12-1/13\nGoal: improve Alexis & Michele F schedules\nAlexis & Michele working on licensing (will no longer see TX TRT once new MD hired)',
 };
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// ─── GitHub API Helpers ──────────────────────────────────────────────────────
+async function getGitHubFileContent(): Promise<string | null> {
+  if (!process.env.GITHUB_TOKEN) {
+    throw new Error('GITHUB_TOKEN environment variable is required for production');
+  }
+
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+    const response = await fetch(url, {
+      headers: {
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+    });
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        // File doesn't exist yet, return seed data
+        return JSON.stringify({ reports: [JAN_2026_SEED] }, null, 2);
+      }
+      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    // Decode base64 content
+    const content = Buffer.from(data.content, 'base64').toString('utf-8');
+    return content;
+  } catch (error) {
+    console.error('Error fetching from GitHub:', error);
+    throw error;
+  }
+}
+
+async function saveToGitHub(content: string): Promise<void> {
+  if (!process.env.GITHUB_TOKEN) {
+    throw new Error('GITHUB_TOKEN environment variable is required for production');
+  }
+
+  try {
+    // First, get the current file to get its SHA (required for update)
+    const getUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+    const getResponse = await fetch(getUrl, {
+      headers: {
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+      },
+    });
+
+    let sha: string | undefined;
+    if (getResponse.ok) {
+      const data = await getResponse.json();
+      sha = data.sha;
+    }
+
+    // Encode content to base64
+    const encodedContent = Buffer.from(content).toString('base64');
+
+    // Create or update the file
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${process.env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Update reports data - ${new Date().toISOString()}`,
+        content: encodedContent,
+        sha: sha, // Include SHA if updating existing file
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`GitHub API error: ${response.status} ${JSON.stringify(error)}`);
+    }
+
+    console.log('Successfully saved to GitHub');
+  } catch (error) {
+    console.error('Error saving to GitHub:', error);
+    throw error;
+  }
+}
+
+// ─── File System Helpers ──────────────────────────────────────────────────────
 function ensureDataFile(): void {
   try {
     const dir = path.join(process.cwd(), 'data');
@@ -82,38 +174,65 @@ function ensureDataFile(): void {
   }
 }
 
-export function getAllReports(): MonthReport[] {
+// ─── Public API ──────────────────────────────────────────────────────────────
+export async function getAllReports(): Promise<MonthReport[]> {
   try {
-    ensureDataFile();
-    const raw = fs.readFileSync(DATA_PATH, 'utf-8');
-    const store: ReportsStore = JSON.parse(raw);
-    const reports = (store.reports ?? []).sort((a, b) => a.id.localeCompare(b.id));
-    console.log(`Loaded ${reports.length} report(s) from ${DATA_PATH}`);
-    return reports;
+    if (useGitHubAPI) {
+      const raw = await getGitHubFileContent();
+      if (!raw) {
+        return [JAN_2026_SEED];
+      }
+      const store: ReportsStore = JSON.parse(raw);
+      const reports = (store.reports ?? []).sort((a, b) => a.id.localeCompare(b.id));
+      console.log(`Loaded ${reports.length} report(s) from GitHub`);
+      return reports;
+    } else {
+      ensureDataFile();
+      const raw = fs.readFileSync(DATA_PATH, 'utf-8');
+      const store: ReportsStore = JSON.parse(raw);
+      const reports = (store.reports ?? []).sort((a, b) => a.id.localeCompare(b.id));
+      console.log(`Loaded ${reports.length} report(s) from ${DATA_PATH}`);
+      return reports;
+    }
   } catch (error) {
     console.error('Error reading reports:', error);
-    throw error;
+    // Fallback to seed data if all else fails
+    return [JAN_2026_SEED];
   }
 }
 
-export function getReport(id: string): MonthReport | null {
-  return getAllReports().find(r => r.id === id) ?? null;
+export async function getReport(id: string): Promise<MonthReport | null> {
+  const reports = await getAllReports();
+  return reports.find(r => r.id === id) ?? null;
 }
 
-export function saveReport(report: MonthReport): void {
-  ensureDataFile();
-  const reports = getAllReports();
+export async function saveReport(report: MonthReport): Promise<void> {
+  const reports = await getAllReports();
   const idx = reports.findIndex(r => r.id === report.id);
   if (idx >= 0) {
     reports[idx] = report;
   } else {
     reports.push(report);
   }
-  fs.writeFileSync(DATA_PATH, JSON.stringify({ reports }, null, 2));
+  
+  const content = JSON.stringify({ reports }, null, 2);
+  
+  if (useGitHubAPI) {
+    await saveToGitHub(content);
+  } else {
+    ensureDataFile();
+    fs.writeFileSync(DATA_PATH, content);
+  }
 }
 
-export function deleteReport(id: string): void {
-  ensureDataFile();
-  const reports = getAllReports().filter(r => r.id !== id);
-  fs.writeFileSync(DATA_PATH, JSON.stringify({ reports }, null, 2));
+export async function deleteReport(id: string): Promise<void> {
+  const reports = (await getAllReports()).filter(r => r.id !== id);
+  const content = JSON.stringify({ reports }, null, 2);
+  
+  if (useGitHubAPI) {
+    await saveToGitHub(content);
+  } else {
+    ensureDataFile();
+    fs.writeFileSync(DATA_PATH, content);
+  }
 }

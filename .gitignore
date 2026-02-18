@@ -3,5 +3,5 @@ node_modules/
 .env
 .env.local
 
-# Keep the data directory but not the actual reports data
-data/reports.json
+# Data file is now committed to git for persistence
+# data/reports.json
