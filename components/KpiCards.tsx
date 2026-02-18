@@ -82,7 +82,7 @@ export function KpiCards({ report }: KpiCardsProps) {
               style={{
                 fontSize: 12,
                 textTransform: 'uppercase',
-                letterSpacing: 0.5px,
+                letterSpacing: '0.5px',
                 color: 'var(--muted)',
                 marginBottom: 12,
                 fontWeight: 600,

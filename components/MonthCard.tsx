@@ -35,7 +35,7 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
           }}
         >
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               Appointments
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -52,7 +52,7 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               Booked Rate
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -69,7 +69,7 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               VV &gt;20 Min
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -86,7 +86,7 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               Availability
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>

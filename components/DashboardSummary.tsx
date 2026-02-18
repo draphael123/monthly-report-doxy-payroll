@@ -85,7 +85,7 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
               style={{
                 fontSize: 11,
                 textTransform: 'uppercase',
-                letterSpacing: 0.5px,
+                letterSpacing: '0.5px',
                 color: 'var(--muted)',
                 marginBottom: 8,
                 fontWeight: 600,

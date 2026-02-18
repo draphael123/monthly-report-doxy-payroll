@@ -112,15 +112,18 @@ export function TrendCharts({ reports }: TrendChartsProps) {
                 style={{ fontSize: '11px' }}
               />
               <Tooltip content={<CustomTooltip />} />
-              {data.some(d => d.apptGoal) && (
-                <ReferenceLine
-                  y={data.find(d => d.apptGoal)?.apptGoal}
-                  stroke="var(--yellow)"
-                  strokeDasharray="5 5"
-                  strokeWidth={2}
-                  label={{ value: 'Goal', position: 'right', fill: 'var(--yellow)', fontSize: 11 }}
-                />
-              )}
+              {(() => {
+                const goalValue = data.find(d => d.apptGoal)?.apptGoal;
+                return goalValue != null ? (
+                  <ReferenceLine
+                    y={goalValue}
+                    stroke="var(--yellow)"
+                    strokeDasharray="5 5"
+                    strokeWidth={2}
+                    label={{ value: 'Goal', position: 'right', fill: 'var(--yellow)', fontSize: 11 }}
+                  />
+                ) : null;
+              })()}
               <Area
                 type="monotone"
                 dataKey="appts"
@@ -163,15 +166,18 @@ export function TrendCharts({ reports }: TrendChartsProps) {
                 content={<CustomTooltip />}
                 formatter={(value: number) => [`${value}%`, 'Booked Rate']}
               />
-              {data.some(d => d.bookedGoal) && (
-                <ReferenceLine
-                  y={data.find(d => d.bookedGoal)?.bookedGoal}
-                  stroke="var(--yellow)"
-                  strokeDasharray="5 5"
-                  strokeWidth={2}
-                  label={{ value: 'Goal', position: 'right', fill: 'var(--yellow)', fontSize: 11 }}
-                />
-              )}
+              {(() => {
+                const goalValue = data.find(d => d.bookedGoal)?.bookedGoal;
+                return goalValue != null ? (
+                  <ReferenceLine
+                    y={goalValue}
+                    stroke="var(--yellow)"
+                    strokeDasharray="5 5"
+                    strokeWidth={2}
+                    label={{ value: 'Goal', position: 'right', fill: 'var(--yellow)', fontSize: 11 }}
+                  />
+                ) : null;
+              })()}
               <Area
                 type="monotone"
                 dataKey="booked"
