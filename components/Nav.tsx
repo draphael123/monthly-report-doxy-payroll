@@ -47,9 +47,6 @@ export function Nav() {
         <Link href="/" className="btn btn-sm">
           Dashboard
         </Link>
-        <Link href="/add" className="btn-primary">
-          + Add Report
-        </Link>
         <ThemeToggle />
       </div>
     </nav>
