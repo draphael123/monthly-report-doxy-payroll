@@ -36,7 +36,14 @@ export function DashboardSummary({ reports }: DashboardSummaryProps) {
     ? reports.map(r => r.label).join(', ')
     : `${reports[0].label} - ${reports[reports.length - 1].label} (${reports.length} months)`;
 
-  const stats = [
+  const stats: Array<{
+    label: string;
+    value: string;
+    change: number | null;
+    changeLabel?: string;
+    color: string;
+    subtitle?: string;
+  }> = [
     {
       label: 'Total Months Tracked',
       value: totalMonths.toString(),
