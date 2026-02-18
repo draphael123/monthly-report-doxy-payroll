@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.env
+.env.local
+
+# Keep the data directory but not the actual reports data
+data/reports.json
