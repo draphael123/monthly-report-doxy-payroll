@@ -20,12 +20,12 @@ export function Nav() {
         }}
       >
         {!logoError && (
-          <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: 60, height: 60, flexShrink: 0 }}>
             <Image
               src="/Fountain%20Logo%20New.png"
               alt="Fountain Vitality Logo"
-              width={40}
-              height={40}
+              width={60}
+              height={60}
               style={{ objectFit: 'contain' }}
               onError={() => setLogoError(true)}
               priority
