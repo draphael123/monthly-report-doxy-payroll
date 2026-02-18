@@ -291,6 +291,91 @@ html, body {
   min-height: calc(100vh - 72px);
 }
 
+/* ── Mobile Responsive ──────────────────────────────── */
+@media (max-width: 768px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .nav {
+    padding: 0 16px;
+    height: 60px;
+  }
+
+  .card-pad {
+    padding: 20px;
+  }
+
+  .section-label {
+    margin-top: 32px;
+    font-size: 11px;
+  }
+
+  h1 {
+    font-size: 28px !important;
+  }
+
+  .data-table {
+    font-size: 12px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  /* Responsive grid for KPI cards */
+  .card-pad[style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  /* Responsive charts */
+  .card-pad > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 60px;
+    padding: 12px 16px;
+  }
+
+  .nav > div {
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 8px;
+  }
+
+  .btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .card-pad {
+    padding: 16px;
+  }
+
+  /* Grid layouts stack on mobile */
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Charts stack vertically */
+  .card-pad > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ── Change indicators ─────────────────────────────── */
 .change-indicator {
   display: inline-flex;

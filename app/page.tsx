@@ -5,10 +5,13 @@ import { MonthCard } from '@/components/MonthCard';
 import { KpiCards } from '@/components/KpiCards';
 import { TrendCharts } from '@/components/TrendCharts';
 import { ProviderRankings } from '@/components/ProviderRankings';
+import { DashboardSummary } from '@/components/DashboardSummary';
+import { SearchAndFilter } from '@/components/SearchAndFilter';
 import type { MonthReport } from '@/lib/types';
 
 export default function DashboardPage() {
   const [reports, setReports] = useState<MonthReport[]>([]);
+  const [filteredReports, setFilteredReports] = useState<MonthReport[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,9 +26,11 @@ export default function DashboardPage() {
       .then((data: MonthReport[]) => {
         if (Array.isArray(data)) {
           setReports(data);
+          setFilteredReports(data);
         } else {
           console.error('Invalid data format received:', data);
           setReports([]);
+          setFilteredReports([]);
         }
       })
       .catch((error) => {
@@ -56,6 +61,8 @@ export default function DashboardPage() {
         </p>
       </div>
 
+      {reports.length > 0 && <DashboardSummary reports={reports} />}
+
       {latestReport && (
         <>
           <div className="section-label">Latest month — {latestReport.label}</div>
@@ -78,6 +85,7 @@ export default function DashboardPage() {
       )}
 
       <div className="section-label">All months</div>
+      <SearchAndFilter reports={reports} onFilter={setFilteredReports} />
       <div
         style={{
           display: 'grid',
@@ -85,14 +93,23 @@ export default function DashboardPage() {
           gap: 20,
         }}
       >
-        {reports.map((r, index) => (
-          <MonthCard 
-            key={r.id} 
-            report={r} 
-            previousReport={index > 0 ? reports[index - 1] : null}
-          />
-        ))}
+        {filteredReports.map((r, index) => {
+          const originalIndex = reports.findIndex(report => report.id === r.id);
+          const previousReport = originalIndex > 0 ? reports[originalIndex - 1] : null;
+          return (
+            <MonthCard 
+              key={r.id} 
+              report={r} 
+              previousReport={previousReport}
+            />
+          );
+        })}
       </div>
+      {filteredReports.length === 0 && reports.length > 0 && (
+        <div style={{ textAlign: 'center', padding: '40px', color: 'var(--muted)' }}>
+          No months found matching your search.
+        </div>
+      )}
 
       {reports.length > 0 && <TrendCharts reports={reports} />}
     </main>
