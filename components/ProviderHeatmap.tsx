@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import type { ProviderData, WeekData } from '@/lib/types';
 
 interface ProviderHeatmapProps {

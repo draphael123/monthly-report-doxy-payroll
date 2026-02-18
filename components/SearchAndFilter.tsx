@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import type { MonthReport } from '@/lib/types';
 
 interface SearchAndFilterProps {
