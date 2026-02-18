@@ -47,11 +47,11 @@ export default function DashboardPage() {
 
   return (
     <main className="page">
-      <div style={{ marginBottom: 40 }}>
-        <h1 className="font-display font-semibold" style={{ fontSize: 32, marginBottom: 8, color: 'var(--text)', letterSpacing: '-0.5px' }}>
+      <div style={{ marginBottom: 48 }}>
+        <h1 className="font-display font-semibold" style={{ fontSize: 36, marginBottom: 12, color: 'var(--text)', letterSpacing: '-0.8px', lineHeight: 1.2 }}>
           Clinical Operations Dashboard
         </h1>
-        <p style={{ color: 'var(--muted)', fontSize: 15, lineHeight: 1.6 }}>
+        <p style={{ color: 'var(--muted)', fontSize: 16, lineHeight: 1.6 }}>
           Monthly reporting — appointments, booked rate, and trends
         </p>
       </div>

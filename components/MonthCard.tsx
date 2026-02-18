@@ -20,10 +20,10 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
       className="card block fade-in"
       style={{ textDecoration: 'none', color: 'inherit' }}
     >
-      <div style={{ padding: '24px' }}>
+      <div style={{ padding: '28px' }}>
         <div
           className="font-display font-semibold"
-          style={{ fontSize: 18, marginBottom: 16, color: 'var(--text)' }}
+          style={{ fontSize: 20, marginBottom: 20, color: 'var(--text)', letterSpacing: '-0.3px' }}
         >
           {report.label}
         </div>
@@ -31,16 +31,15 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 16,
-            fontSize: 13,
+            gap: 20,
           }}
         >
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6, color: 'var(--muted)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               Appointments
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ color: 'var(--accent)', fontWeight: 600, fontSize: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ color: 'var(--accent)', fontWeight: 700, fontSize: 20 }}>
                 {Number(summary.appts).toLocaleString()}
               </div>
               {prevSummary && (
@@ -53,11 +52,11 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6, color: 'var(--muted)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               Booked Rate
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ color: 'var(--text)', fontWeight: 600, fontSize: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ color: 'var(--text)', fontWeight: 700, fontSize: 20 }}>
                 {summary.booked}%
               </div>
               {prevSummary && (
@@ -70,11 +69,11 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6, color: 'var(--muted)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               VV &gt;20 Min
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ color: 'var(--text)', fontWeight: 600, fontSize: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ color: 'var(--text)', fontWeight: 700, fontSize: 20 }}>
                 {summary.vvs}%
               </div>
               {prevSummary && (
@@ -87,11 +86,11 @@ export function MonthCard({ report, previousReport }: MonthCardProps) {
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6, color: 'var(--muted)' }}>
+            <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5px, marginBottom: 8, color: 'var(--muted)', fontWeight: 600, fontFamily: 'var(--font-mono)' }}>
               Availability
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div style={{ color: 'var(--text)', fontWeight: 600, fontSize: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div style={{ color: 'var(--text)', fontWeight: 700, fontSize: 20 }}>
                 {summary.avail}d
               </div>
               {prevSummary && (

@@ -65,12 +65,12 @@ export function KpiCards({ report }: KpiCardsProps) {
           key={c.label}
           className="card-pad"
           style={{ 
-            borderTop: `3px solid ${c.color}`,
-            transition: 'all 0.2s ease',
+            borderLeft: `4px solid ${c.color}`,
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+            e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'translateY(0)';
@@ -79,17 +79,18 @@ export function KpiCards({ report }: KpiCardsProps) {
         >
           <div
             style={{
-              fontSize: 11,
+              fontSize: 12,
               textTransform: 'uppercase',
-              letterSpacing: 1.2,
+              letterSpacing: 0.5px,
               color: 'var(--muted)',
-              marginBottom: 8,
-              fontWeight: 500,
+              marginBottom: 12,
+              fontWeight: 600,
+              fontFamily: 'var(--font-mono)',
             }}
           >
             {c.label}
           </div>
-          <div style={{ fontSize: 24, fontWeight: 700, color: c.color, marginBottom: 8 }}>
+          <div style={{ fontSize: 32, fontWeight: 700, color: c.color, marginBottom: 12, lineHeight: 1.2 }}>
             {c.value}
           </div>
           <GoalAttainmentBar
