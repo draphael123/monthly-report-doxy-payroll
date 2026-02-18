@@ -22,7 +22,7 @@ export function Nav() {
         {!logoError && (
           <div style={{ position: 'relative', width: 40, height: 40, flexShrink: 0 }}>
             <Image
-              src="/fountain-logo-new.png"
+              src="/Fountain Logo New.png"
               alt="Fountain Vitality Logo"
               width={40}
               height={40}
