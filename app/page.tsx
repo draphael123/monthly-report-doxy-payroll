@@ -12,9 +12,25 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetch('/api/reports')
-      .then((res) => res.json())
-      .then((data: MonthReport[]) => setReports(Array.isArray(data) ? data : []))
-      .catch(() => setReports([]))
+      .then((res) => {
+        if (!res.ok) {
+          console.error('Failed to fetch reports:', res.status, res.statusText);
+          return [];
+        }
+        return res.json();
+      })
+      .then((data: MonthReport[]) => {
+        if (Array.isArray(data)) {
+          setReports(data);
+        } else {
+          console.error('Invalid data format received:', data);
+          setReports([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching reports:', error);
+        setReports([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

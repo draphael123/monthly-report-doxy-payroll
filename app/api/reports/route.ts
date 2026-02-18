@@ -7,7 +7,9 @@ export async function GET() {
     const reports = getAllReports();
     return NextResponse.json(reports);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to load reports' }, { status: 500 });
+    console.error('Error loading reports:', error);
+    // Return empty array instead of error object to match expected format
+    return NextResponse.json([], { status: 500 });
   }
 }
 

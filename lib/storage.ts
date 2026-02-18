@@ -66,19 +66,34 @@ const JAN_2026_SEED: MonthReport = {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function ensureDataFile(): void {
-  const dir = path.join(process.cwd(), 'data');
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  if (!fs.existsSync(DATA_PATH)) {
-    const seed: ReportsStore = { reports: [JAN_2026_SEED] };
-    fs.writeFileSync(DATA_PATH, JSON.stringify(seed, null, 2));
+  try {
+    const dir = path.join(process.cwd(), 'data');
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    if (!fs.existsSync(DATA_PATH)) {
+      const seed: ReportsStore = { reports: [JAN_2026_SEED] };
+      fs.writeFileSync(DATA_PATH, JSON.stringify(seed, null, 2));
+      console.log('Created data file at:', DATA_PATH);
+    }
+  } catch (error) {
+    console.error('Error ensuring data file:', error);
+    throw error;
   }
 }
 
 export function getAllReports(): MonthReport[] {
-  ensureDataFile();
-  const raw = fs.readFileSync(DATA_PATH, 'utf-8');
-  const store: ReportsStore = JSON.parse(raw);
-  return (store.reports ?? []).sort((a, b) => a.id.localeCompare(b.id));
+  try {
+    ensureDataFile();
+    const raw = fs.readFileSync(DATA_PATH, 'utf-8');
+    const store: ReportsStore = JSON.parse(raw);
+    const reports = (store.reports ?? []).sort((a, b) => a.id.localeCompare(b.id));
+    console.log(`Loaded ${reports.length} report(s) from ${DATA_PATH}`);
+    return reports;
+  } catch (error) {
+    console.error('Error reading reports:', error);
+    throw error;
+  }
 }
 
 export function getReport(id: string): MonthReport | null {
