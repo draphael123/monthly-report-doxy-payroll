@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { MonthCard } from '@/components/MonthCard';
 import { KpiCards } from '@/components/KpiCards';
 import { TrendCharts } from '@/components/TrendCharts';
-import { ProviderRankings } from '@/components/ProviderRankings';
+import { UtilizationRanking } from '@/components/UtilizationRanking';
 import { DashboardSummary } from '@/components/DashboardSummary';
 import { SearchAndFilter } from '@/components/SearchAndFilter';
 import { ProviderVisitPieChart } from '@/components/ProviderVisitPieChart';
@@ -69,7 +69,7 @@ export default function DashboardPage() {
           <div className="section-label">Latest month — {latestReport.label}</div>
           <KpiCards report={latestReport} />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }}>
-            <ProviderRankings report={latestReport} />
+            <UtilizationRanking providers={latestReport.providers} limit={10} />
             <div className="card-pad" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 12 }}>
               <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 8 }}>Export Data</div>
               <a

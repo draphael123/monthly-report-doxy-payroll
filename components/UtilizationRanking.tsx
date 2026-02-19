@@ -34,36 +34,44 @@ export function UtilizationRanking({ providers, limit = 10 }: UtilizationRanking
     <div className="card" style={{ overflow: 'hidden' }}>
       <div
         style={{
-          padding: '14px 18px',
+          padding: '14px 18px 12px',
           borderBottom: '1px solid var(--border)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: 12,
         }}
       >
         <span
           style={{
+            display: 'block',
             fontSize: 11,
             fontWeight: 600,
             letterSpacing: '1.5px',
             color: 'var(--muted)',
             textTransform: 'uppercase',
+            marginBottom: 12,
           }}
         >
           {sectionTitle}
         </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <div
+          role="group"
+          aria-label="Sort by utilization"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'stretch',
+            borderRadius: 8,
+            border: '1px solid var(--border)',
+            overflow: 'hidden',
+            background: 'var(--surface2)',
+          }}
+        >
           <button
             type="button"
             onClick={() => setMode('highest')}
+            aria-pressed={mode === 'highest'}
             style={{
-              padding: '6px 12px',
-              fontSize: 12,
-              fontWeight: 500,
-              border: '1px solid var(--border)',
-              borderRadius: 6,
+              padding: '8px 16px',
+              fontSize: 13,
+              fontWeight: 600,
+              border: 'none',
               background: mode === 'highest' ? 'var(--accent)' : 'transparent',
               color: mode === 'highest' ? '#fff' : 'var(--text)',
               cursor: 'pointer',
@@ -74,12 +82,13 @@ export function UtilizationRanking({ providers, limit = 10 }: UtilizationRanking
           <button
             type="button"
             onClick={() => setMode('lowest')}
+            aria-pressed={mode === 'lowest'}
             style={{
-              padding: '6px 12px',
-              fontSize: 12,
-              fontWeight: 500,
-              border: '1px solid var(--border)',
-              borderRadius: 6,
+              padding: '8px 16px',
+              fontSize: 13,
+              fontWeight: 600,
+              border: 'none',
+              borderLeft: '1px solid var(--border)',
               background: mode === 'lowest' ? 'var(--accent)' : 'transparent',
               color: mode === 'lowest' ? '#fff' : 'var(--text)',
               cursor: 'pointer',
