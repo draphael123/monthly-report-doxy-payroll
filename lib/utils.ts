@@ -81,3 +81,30 @@ export function attainmentBg(status: 'met' | 'close' | 'missed'): string {
     ? 'rgba(227,179,65,0.15)'
     : 'rgba(247,129,102,0.15)';
 }
+
+/**
+ * Calculate month-over-month change percentage
+ */
+export function calculateChange(current: number, previous: number | null): {
+  value: number;
+  percent: number;
+  direction: 'up' | 'down' | 'neutral';
+} | null {
+  if (previous === null || previous === 0) return null;
+  const change = current - previous;
+  const percent = Math.round((change / previous) * 100);
+  return {
+    value: change,
+    percent: Math.abs(percent),
+    direction: change > 0 ? 'up' : change < 0 ? 'down' : 'neutral',
+  };
+}
+
+/**
+ * Get provider average utilization
+ */
+export function getProviderAverage(provider: { weeks: (number | null)[] }): number | null {
+  const valid = provider.weeks.filter((v): v is number => v !== null);
+  if (valid.length === 0) return null;
+  return Math.round(valid.reduce((a, b) => a + b, 0) / valid.length);
+}

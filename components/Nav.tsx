@@ -1,24 +1,53 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { ThemeToggle } from './ThemeToggle';
+import { useState } from 'react';
 
 export function Nav() {
+  const [logoError, setLogoError] = useState(false);
+
   return (
     <nav className="nav">
       <Link
         href="/"
-        className="font-display font-semibold text-[17px] tracking-tight"
-        style={{ color: 'var(--text)' }}
+        style={{ 
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          textDecoration: 'none',
+        }}
       >
-        Fountain <span style={{ color: 'var(--accent)' }}>Vitality</span>
+        {!logoError && (
+          <div style={{ position: 'relative', width: 60, height: 60, flexShrink: 0 }}>
+            <Image
+              src="/Fountain%20Logo%20New.png"
+              alt="Fountain Vitality Logo"
+              width={60}
+              height={60}
+              style={{ objectFit: 'contain' }}
+              onError={() => setLogoError(true)}
+              priority
+            />
+          </div>
+        )}
+        <span
+          className="font-display font-semibold"
+          style={{ 
+            fontSize: 22, 
+            letterSpacing: '-0.5px',
+            color: 'var(--text)',
+          }}
+        >
+          Fountain <span style={{ color: 'var(--accent)' }}>Vitality</span>
+        </span>
       </Link>
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
         <Link href="/" className="btn btn-sm">
           Dashboard
         </Link>
-        <Link href="/add" className="btn-primary">
-          + Add Report
-        </Link>
+        <ThemeToggle />
       </div>
     </nav>
   );

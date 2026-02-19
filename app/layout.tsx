@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { DM_Mono, Fraunces } from 'next/font/google';
 import { Nav } from '@/components/Nav';
+import { ThemeProvider } from '@/lib/theme';
 import './globals.css';
 
 const dmMono = DM_Mono({
@@ -25,8 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${dmMono.variable} ${fraunces.variable}`}>
       <body>
-        <Nav />
-        {children}
+        <ThemeProvider>
+          <Nav />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
