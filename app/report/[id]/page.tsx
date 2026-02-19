@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { KpiCards } from '@/components/KpiCards';
 import { WeeklyTable } from '@/components/WeeklyTable';
 import { ProviderTable } from '@/components/ProviderTable';
+import { UtilizationRanking } from '@/components/UtilizationRanking';
 import { LeadsTable } from '@/components/LeadsTable';
 import { NotesSection } from '@/components/NotesSection';
 import type { MonthReport } from '@/lib/types';
@@ -125,7 +126,8 @@ export default function ReportDetailPage() {
       />
 
       <div className="section-label">Provider Schedule Utilization — % of Schedule Booked</div>
-      <div className="card" style={{ overflowX: 'auto' }}>
+      <UtilizationRanking providers={report.providers} limit={10} />
+      <div className="card" style={{ overflowX: 'auto', marginTop: 16 }}>
         <ProviderTable providers={report.providers} weeks={report.weeks} />
       </div>
 
